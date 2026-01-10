@@ -1,9 +1,8 @@
-// app/layout.tsx
+
 import type { Metadata } from "next";
 import "./globals.css";
 
-import Header from "./components/Header";
-import InfoStrip from "./components/InfoStrip";
+import StickyHeader from "./components/StickyHeader";
 import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
@@ -21,8 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-white text-black">
         <div className="fixed top-0 left-0 right-0 z-50">
-          <Header />
-          <InfoStrip text="1,000,000+ drivers helped so far" />
+          <StickyHeader />
         </div>
 
         <main className="pt-[104px]">{children}</main>
