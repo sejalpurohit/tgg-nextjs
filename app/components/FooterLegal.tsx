@@ -4,8 +4,8 @@ import SRALogo from "../../public/sra-logo.svg";
 
 export default function FooterLegal() {
   return (
-    <section className="bg-white px-4 py-8 border-t border-gray-200">
-      <div className="mb-6">
+    <section className="bg-white px-4 py-4 border-t border-gray-200">
+      <div className="mb-4">
         <Image
           src={SRALogo}
           alt="Solicitors Regulation Authority"

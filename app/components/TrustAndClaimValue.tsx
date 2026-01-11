@@ -17,6 +17,8 @@ export default function TrustAndClaimValue() {
           <span className="font-extrabold">£5,318.25</span>* per vehicle
         </p>
       </div>
+      <div className="h-px bg-gray-300" />
+
     </div>
   );
 }

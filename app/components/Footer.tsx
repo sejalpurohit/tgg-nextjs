@@ -1,5 +1,4 @@
 import FooterLegal from "./FooterLegal";
-import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -8,17 +7,17 @@ export default function Footer() {
 
       <footer className="bg-black py-4">
         <nav className="flex justify-center items-center gap-3 text-xs text-gray-300">
-          <Link href="/terms" className="hover:underline">
+          <span className="underline cursor-pointer hover:text-white">
             Terms & Conditions
-          </Link>
+          </span>
           <span>|</span>
-          <Link href="/complaints" className="hover:underline">
+          <span className="underline cursor-pointer hover:text-white">
             Complaints Procedure
-          </Link>
+          </span>
           <span>|</span>
-          <Link href="/privacy" className="hover:underline">
+          <span className="underline cursor-pointer hover:text-white">
             Privacy Policy
-          </Link>
+          </span>
         </nav>
       </footer>
     </>
