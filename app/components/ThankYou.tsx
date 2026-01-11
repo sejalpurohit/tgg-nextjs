@@ -116,7 +116,7 @@ export default function ThankYou() {
             <input
               value={reg}
               onChange={(e) => setReg(sanitizeReg(e.target.value))}
-              placeholder="Enter Reg"
+              placeholder="SG65 YBA"
               className="absolute inset-0 w-full h-full bg-transparent uppercase font-extrabold text-4xl text-center pl-12"
             />
           </div>
