@@ -13,6 +13,7 @@ import DocumentsIcon from "../../public/documentsIcon.svg";
 import TickGreen from "../../public/greenTick.svg";
 import AgreementsOptionsSvg from "../../public/options.svg";
 import RectangleYellow from "../../public/rectangleyellow.svg";
+import VehicleInput from "../../public/VehicleInput.svg";
 import GBIcon from "../../public/GB.svg";
 
 import StarNone from "../../public/zeroStars.svg";
@@ -109,14 +110,14 @@ export default function ThankYou() {
 
           <div className="relative w-full">
             <Image src={RectangleYellow} alt="" className="w-full h-auto" />
-            <div className="absolute left-2 top-1/2 -translate-y-1/2 flex justify-center">
+            <div className="absolute left-3 top-1/2 -translate-y-1/2 flex justify-center">
               <Image src={GBIcon} alt="GB" width={24} height={24} />
             </div>
             <input
               value={reg}
               onChange={(e) => setReg(sanitizeReg(e.target.value))}
               placeholder="Enter Reg"
-              className="absolute inset-0 w-full h-full bg-transparent uppercase font-extrabold text-2xl text-center pl-12"
+              className="absolute inset-0 w-full h-full bg-transparent uppercase font-extrabold text-4xl text-center pl-12"
             />
           </div>
 
