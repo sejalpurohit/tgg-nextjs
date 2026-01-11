@@ -26,14 +26,13 @@ export default function MainContent() {
         agreement.
       </h1>
 
-      <p className="text-base text-gray-600 leading-relaxed -mt-2">
-        Check in under 60 seconds to see if you're owed compensation. Use the
-        free agreement finder to start your claim.
+      <p className="text-base text-gray-600">
+      Check in under 60 seconds to see if you’re owed compensation. Use the free agreement finder to start your claim.
       </p>
 
       <button
         onClick={() => router.push(ROUTES.CURRENT_ADDRESS)}
-        className="w-full flex justify-center active:scale-[0.98] transition"
+        className="w-full flex justify-center transition"
       >
         <Image src={SearchButton} alt="Find My Agreements" width={360} height={72} />
       </button>
@@ -41,16 +40,18 @@ export default function MainContent() {
       <TrustAndClaimValue />
 
       <ul className="mx-auto w-fit space-y-3 text-sm text-gray-800">
-        {[
-          "Check in under 60 seconds",
-          "Free agreement finder",
-          "1 Million+ drivers signed up",
-        ].map((text) => (
-          <li key={text} className="flex items-start gap-3">
-            <Image src={Tick} alt="" width={18} height={18} />
-            <span>{text}</span>
-          </li>
-        ))}
+        <li className="flex items-start gap-3">
+          <Image src={Tick} alt="" width={18} height={18} />
+          <span>Check in under <span className="font-bold">60 seconds</span></span>
+        </li>
+        <li className="flex items-start gap-3">
+          <Image src={Tick} alt="" width={18} height={18} />
+          <span><span className="font-bold">Free</span> agreement finder</span>
+        </li>
+        <li className="flex items-start gap-3">
+          <Image src={Tick} alt="" width={18} height={18} />
+          <span><span className="font-bold">1 Million+</span> drivers signed up</span>
+        </li>
       </ul>
 
       <div className="space-y-4">

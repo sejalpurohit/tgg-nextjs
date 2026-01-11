@@ -59,7 +59,7 @@ export default function ThankYou() {
     v.toUpperCase().replace(/[^A-Z0-9 ]/g, "").replace(/\s+/g, " ").slice(0, 8);
 
   return (
-    <section className="px-4 space-y-6">
+    <section className="px-4 space-y-6 font-tiktok">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 pt-2">
         <div>
@@ -116,7 +116,7 @@ export default function ThankYou() {
             <input
               value={reg}
               onChange={(e) => setReg(sanitizeReg(e.target.value))}
-              placeholder="SG65 YBA"
+              placeholder="ENTER REG"
               className="absolute inset-0 w-full h-full bg-transparent uppercase font-extrabold text-4xl text-center pl-12"
             />
           </div>

@@ -12,7 +12,7 @@ type Validation = { ok: true } | { ok: false; message: string };
 
 function FieldError({ show, message }: { show: boolean; message?: string }) {
   if (!show) return null;
-  return <p className="mt-1 text-[#FF004F] text-sm font-semibold">{message}</p>;
+  return <p className="mt-1 text-[#FF004F] text-sm font-semibold font-tiktok">{message}</p>;
 }
 
 export default function PersonalDetails() {
@@ -71,41 +71,35 @@ export default function PersonalDetails() {
 
   return (
     <section className="px-4 space-y-6">
-      <h1 className="text-[30px] font-extrabold">Your Personal Details</h1>
-
-      <p className="text-[18px] text-gray-600 leading-relaxed">
-        Your current personal details are essential to
-        <br />
-        search for all finance agreements attached to
-        <br />
-        your name.
+      <h1 className="pt-6 text-[24px] font-semibold">Your Personal Details</h1>
+      <p className="text-[16px] text-gray-600 leading-relaxed -mt-4">
+        Your current personal details are essential to search for all finance agreements attached to your name.
       </p>
 
       {/* Title */}
-      <div className="w-[140px]">
+      <div className="w-[88px]">
         <div className="relative">
           <select
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={() => touch("title")}
             className={[
-              "w-full appearance-none bg-white px-4 py-4 text-[18px] text-gray-700 outline-none",
+              "w-full h-[50px] appearance-none bg-white px-4 text-[16px] text-left   text-gray-500 outline-none",
               touched.title && !titleV.ok
-                ? "border-2 border-[#FF004F] rounded-none"
-                : "border border-gray-400 rounded-md",
+                ? "border-0 border-[#FF004F] rounded-none"
+                : "border border-gray-400 rounded-none",
             ].join(" ")}
           >
-            <option value="" disabled>
+            <option value="" disabled hidden className="text-gray-500">
               Title
             </option>
-            <option>Mr</option>
-            <option>Mrs</option>
-            <option>Ms</option>
-            <option>Miss</option>
-            <option>Dr</option>
+            <option className="text-gray-700">Mr</option>
+            <option className="text-gray-700">Miss</option>
+            <option className="text-gray-700">Mrs</option>
+            <option className="text-gray-700">Ms</option>
           </select>
 
-          <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">
+          <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 text-[10px]">
             ▼
           </span>
 
@@ -124,10 +118,10 @@ export default function PersonalDetails() {
           onBlur={() => touch("firstName")}
           placeholder="First Name"
           className={[
-            "w-full px-4 py-5 text-[18px] outline-none",
+            "w-full px-4 h-[50px] text-[18px] outline-none font-tiktok",
             touched.firstName && !firstNameV.ok
               ? "bg-white border-2 border-[#FF004F] rounded-none"
-              : "bg-gray-100 border-2 border-transparent rounded-lg",
+              : "bg-gray-100 border-2 border-transparent rounded-none",
           ].join(" ")}
         />
         <FieldError
@@ -144,10 +138,10 @@ export default function PersonalDetails() {
           onBlur={() => touch("surname")}
           placeholder="Surname"
           className={[
-            "w-full px-4 py-5 text-[18px] outline-none",
+            "w-full px-4 h-[50px] text-[18px] outline-none font-tiktok",
             touched.surname && !surnameV.ok
               ? "bg-white border-2 border-[#FF004F] rounded-none"
-              : "bg-gray-100 border-2 border-transparent rounded-lg",
+              : "bg-gray-100 border-2 border-transparent rounded-none",
           ].join(" ")}
         />
         <FieldError
@@ -158,7 +152,7 @@ export default function PersonalDetails() {
 
       {/* DOB */}
       <div className="space-y-3">
-        <p className="text-[18px] text-gray-800">Date of Birth</p>
+        <p className="text-[16px] text-gray-800/80 text-s">Date of Birth</p>
 
         <div className="flex gap-4">
           <div className="w-1/3">
@@ -170,10 +164,10 @@ export default function PersonalDetails() {
               type="number"
               inputMode="numeric"
               className={[
-                "w-full px-4 py-5 text-[18px] outline-none text-center",
+                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
                 dobHasError
                   ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-lg",
+                  : "bg-gray-100 border-2 border-transparent rounded-none",
               ].join(" ")}
             />
           </div>
@@ -187,10 +181,10 @@ export default function PersonalDetails() {
               type="number"
               inputMode="numeric"
               className={[
-                "w-full px-4 py-5 text-[18px] outline-none text-center",
+                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
                 dobHasError
                   ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-lg",
+                  : "bg-gray-100 border-2 border-transparent rounded-none",
               ].join(" ")}
             />
           </div>
@@ -204,10 +198,10 @@ export default function PersonalDetails() {
               type="number"
               inputMode="numeric"
               className={[
-                "w-full px-4 py-5 text-[18px] outline-none text-center",
+                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
                 dobHasError
                   ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-lg",
+                  : "bg-gray-100 border-2 border-transparent rounded-none",
               ].join(" ")}
             />
           </div>
@@ -223,9 +217,8 @@ export default function PersonalDetails() {
         type="button"
         onClick={handleNext}
         disabled={!allValid}
-        className={`w-full rounded-full py-4 text-[22px] font-semibold text-white flex items-center justify-center gap-3 transition-colors ${
-          allValid ? "bg-[#FF004F]" : "bg-gray-300"
-        }`}
+        className={`w-full rounded-md py-4 text-[22px] h-[50px] font-semibold text-white flex items-center justify-center gap-3 transition-colors font-tiktok ${allValid ? "bg-[#FF004F]" : "bg-gray-300"
+          }`}
       >
         Next <span className="text-[26px] leading-none">›</span>
       </button>

@@ -13,7 +13,7 @@ export default function TrustAndClaimValue() {
 
       <div className="text-center">
         <p className="text-[28px] font-normal">
-          Average claim value:{" "}
+          Average claim value:<br />
           <span className="font-extrabold">£5,318.25</span>* per vehicle
         </p>
       </div>

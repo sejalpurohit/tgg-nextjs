@@ -43,10 +43,10 @@ function ValidatedInput({
         placeholder={placeholder}
         aria-invalid={hasError}
         className={[
-          "w-full px-3 py-3 text-base outline-none",
+          "w-full px-3 h-[50px] text-base outline-none",
           hasError
             ? "bg-white border-2 border-[#FF004F] rounded-none"
-            : "bg-gray-100 border-2 border-transparent rounded-lg",
+            : "bg-gray-100 border-2 border-transparent rounded-none",
         ].join(" ")}
       />
       {hasError && (
@@ -158,8 +158,8 @@ export default function CurrentAddress() {
 
       <p className="text-base text-gray-700">Enter your postcode and tap 'Search'.</p>
 
-      <div className="flex items-start gap-3">
-        <div className="flex-1">
+      <div className="flex items-center gap-3">
+        <div className="w-[197px]">
           <ValidatedInput
             value={postcode}
             placeholder="Postcode"
@@ -184,8 +184,8 @@ export default function CurrentAddress() {
           type="button"
           onClick={handleSearch}
           disabled={!isPostcodeValid}
-          className={`min-w-[100px] rounded-full px-6 py-3 text-base font-semibold text-white ${
-            isPostcodeValid ? "bg-[#FF004F]" : "bg-gray-300"
+          className={`min-w-[132px] h-[35px] rounded-full px-6 text-base font-semibold text-white flex items-center justify-center ${
+            isPostcodeValid ? "bg-[#FF004F]" : "bg-[#B8B8BE]"
           }`}
         >
           Search

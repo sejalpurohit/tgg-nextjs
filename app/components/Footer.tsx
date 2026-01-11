@@ -5,7 +5,7 @@ export default function Footer() {
     <>
       <FooterLegal />
 
-      <footer className="bg-black py-4">
+      <footer className="bg-black py-4 font-tiktok">
         <nav className="flex justify-center items-center gap-3 text-xs text-gray-300">
           <span className="underline cursor-pointer hover:text-white">
             Terms & Conditions

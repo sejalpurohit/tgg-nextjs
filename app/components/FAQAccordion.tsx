@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
-import SearchButton from "../../public/searchButton.svg";
+import SearchButton from "../../public/findmyagreements.svg";
 
 type FAQItem = {
   question: string;
@@ -22,12 +22,12 @@ const faqs: FAQItem[] = [
   {
     question: "What criteria must I meet to make a claim?",
     answer:
-      "Your lender must have failed to disclose commission details on your agreement(s). If your finance details were inadequately explained or you faced higher interest rates due to commissions, you could be eligible for £1,000s.",
+      "Your lender must have failed to disclose the commission details on your agreement(s). If your finance details were inadequately explained or you faced higher interest rates due to commissions, you could be eligible for £1,000s. Check our free online form to see if you meet the criteria.",
   },
   {
     question: "Does the type of agreement matter (PCP vs. HP)?",
     answer:
-      "No. If you had an HP loan instead of a PCP agreement, we still accept claims for various vehicle finance agreements.",
+      "Don't worry if you had an HP loan instead of a PCP agreement – we accept claims for various vehicle finance agreements. Start your claim today with our online form.",
   },
 ];
 
@@ -40,7 +40,7 @@ export default function FAQAccordion() {
   };
 
   return (
-    <section className="px-4 pt-0 pb-4 bg-white">
+    <section className="px-4 pt-0 pb-4 bg-white font-tiktok">
       <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
 
       <div className="divide-y divide-gray-200">
@@ -57,7 +57,14 @@ export default function FAQAccordion() {
             </button>
 
             {openIndex === index && (
-              <p className="mt-3 text-sm text-gray-600 leading-relaxed pl-6">
+              <p
+                className="mt-3 text-gray-600 pl-6"
+                style={{
+                  fontSize: "12px",
+                  lineHeight: "22px",
+                  marginBottom: "15px",
+                }}
+              >
                 {faq.answer}
               </p>
             )}
