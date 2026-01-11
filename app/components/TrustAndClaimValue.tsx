@@ -7,8 +7,8 @@ export default function TrustAndClaimValue() {
   return (
     <div className="space-y-3">
       <div className="flex justify-center items-center gap-8 pt-6">
-        <Image src={TrustPilot} alt="TrustPilot" width={140} height={40} />
-        <Image src={SecureSSL} alt="Secure SSL Encryption" width={160} height={40} />
+        <Image src={TrustPilot} alt="TrustPilot" width={94} height={32} />
+        <Image src={SecureSSL} alt="Secure SSL Encryption" width={75} height={21} />
       </div>
 
       <div className="text-center">
