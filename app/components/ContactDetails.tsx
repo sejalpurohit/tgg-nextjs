@@ -7,9 +7,9 @@ import { useRouter } from "next/navigation";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 import { ROUTES } from "../routes";
 
-import SecureSSL from "../../public/secure-ssl.svg";
-import ContactIcon from "../../public/contactIcon.svg";
-import SearchButton from "../../public/searchButton.svg";
+import SecureSSL from "../../public/icons/secure-ssl.svg";
+import ContactIcon from "../../public/icons/contactIcon.svg";
+import SearchButton from "../../public/icons/searchButton.svg";
 
 import {
   validateUKMobile,

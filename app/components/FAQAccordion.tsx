@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
-import SearchButton from "../../public/findmyagreements.svg";
+import SearchButton from "../../public/icons/findmyagreements.svg";
 
 type FAQItem = {
   question: string;

@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-import TrustPilot from "../../public/trustpilot.svg";
-import SecureSSL from "../../public/secure-ssl.svg";
+import TrustPilot from "../../public/icons/trustpilot.svg";
+import SecureSSL from "../../public/icons/secure-ssl.svg";
 
 export default function TrustAndClaimValue() {
   return (

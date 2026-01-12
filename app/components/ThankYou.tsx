@@ -4,24 +4,24 @@ import { useState } from "react";
 import Image from "next/image";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 
-import CongratsIcon from "../../public/congratulations.svg";
-import CourmacsLogo from "../../public/courmacsLogo.svg";
-import VideoFrame from "../../public/videoFrame.svg";
-import WhatsAppIcon from "../../public/whatsapp.svg";
-import UploadBtnSvg from "../../public/clickToUpload.svg";
-import DocumentsIcon from "../../public/documentsIcon.svg";
-import TickGreen from "../../public/greenTick.svg";
-import AgreementsOptionsSvg from "../../public/options.svg";
-import RectangleYellow from "../../public/rectangleyellow.svg";
-import VehicleInput from "../../public/VehicleInput.svg";
-import GBIcon from "../../public/GB.svg";
+import CongratsIcon from "../../public/icons/congratulations.svg";
+import CourmacsLogo from "../../public/icons/courmacsLogo.svg";
+import VideoFrame from "../../public/icons/videoFrame.svg";
+import WhatsAppIcon from "../../public/icons/whatsapp.svg";
+import UploadBtnSvg from "../../public/icons/clickToUpload.svg";
+import DocumentsIcon from "../../public/icons/documentsIcon.svg";
+import TickGreen from "../../public/icons/greenTick.svg";
+import AgreementsOptionsSvg from "../../public/icons/options.svg";
+import RectangleYellow from "../../public/icons/rectangleyellow.svg";
+import VehicleInput from "../../public/icons/VehicleInput.svg";
+import GBIcon from "../../public/icons/GB.svg";
 
-import StarNone from "../../public/zeroStars.svg";
-import Star1 from "../../public/oneStar.svg";
-import Star2 from "../../public/twoStars.svg";
-import Star3 from "../../public/threeStars.svg";
-import Star4 from "../../public/fourStars.svg";
-import Star5 from "../../public/fiveStars.svg";
+import StarNone from "../../public/icons/zeroStars.svg";
+import Star1 from "../../public/icons/oneStar.svg";
+import Star2 from "../../public/icons/twoStars.svg";
+import Star3 from "../../public/icons/threeStars.svg";
+import Star4 from "../../public/icons/fourStars.svg";
+import Star5 from "../../public/icons/fiveStars.svg";
 
 const STAR_IMAGES = [StarNone, Star1, Star2, Star3, Star4, Star5];
 

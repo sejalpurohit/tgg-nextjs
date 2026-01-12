@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import SRALogo from "../../public/sra-logo.svg";
+import SRALogo from "../../public/icons/sra-logo.svg";
 
 export default function FooterLegal() {
   return (

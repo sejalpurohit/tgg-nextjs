@@ -1,6 +1,6 @@
 import Image from "next/image";
-import pcppalLogo from '../../public/pcppal-logo.svg';
-import trustPiloTSSL from '../../public/trustpilot-ssl.svg'
+import pcppalLogo from '../../public/icons/pcppal-logo.svg';
+import trustPiloTSSL from '../../public/icons/trustpilot-ssl.svg'
 
 
 export default function Header() {

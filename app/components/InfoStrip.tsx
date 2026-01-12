@@ -1,5 +1,5 @@
 import Image from "next/image";
-import PublicImage from "../../public/profileIcon.svg";
+import PublicImage from "../../public/icons/profileIcon.svg";
 
 export default function InfoStrip({ text }: { text: string }) {
   return (

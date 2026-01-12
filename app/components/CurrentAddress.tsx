@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
 import TrustAndClaimValue from "./TrustAndClaimValue";
-import HomeIcon from "../../public/homeIcon.svg";
+import HomeIcon from "../../public/icons/homeIcon.svg";
 
 import {
   sanitizeText,

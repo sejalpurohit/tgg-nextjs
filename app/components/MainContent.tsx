@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import { ROUTES } from "../routes";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 
-import Tick from "../../public/tick.svg";
-import SearchButton from "../../public/searchButton.svg";
-import ViewLender from "../../public/view-lenders.svg";
-import FAQ from "../../public/faq.svg";
+import Tick from "../../public/icons/tick.svg";
+import SearchButton from "../../public/icons/searchButton.svg";
+import ViewLender from "../../public/icons/viewLenders.svg";
+import FAQ from "../../public/icons/faq.svg";
 
 import FAQAccordion from "./FAQAccordion";
 
