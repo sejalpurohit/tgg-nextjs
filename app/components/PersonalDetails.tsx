@@ -12,6 +12,80 @@ import { validateRequired, validateLettersOnly, validateDOB } from "../utils/val
 
 type Validation = { ok: true } | { ok: false; message: string };
 
+// TODO: Sejal: can be moved to a new component if needed
+const OPTIONS = ["Mr", "Miss", "Mrs", "Ms"];
+function TitleSelect({
+  value,
+  setValue,
+  error,
+  onBlur,
+}: {
+  value: string;
+  setValue: (v: string) => void;
+  error?: boolean;
+  onBlur?: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative w-[88px]">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        onBlur={() => {
+          setTimeout(() => {
+            setOpen(false);
+            onBlur?.();
+          }, 0);
+        }}
+        aria-invalid={error || undefined}
+        className={cn(
+          "w-full h-[50px] bg-white px-4 text-base text-left",
+          "flex items-center justify-between rounded-none",
+          error ? "border-2 border-[#FF004F]" : "border border-gray-400"
+        )}
+      >
+        <span className={value ? "text-gray-700" : "text-gray-500"}>
+          {value || "Title"}
+        </span>
+        <span className="text-gray-700 text-[10px]">
+          {open ? "▲" : "▼"}
+        </span>
+      </button>
+
+      {open && (
+        <div
+          className={cn(
+            "absolute left-0 right-0 z-50 bg-white",
+            error
+              ? "border-2 border-[#FF004F] border-t-0"
+              : "border border-gray-400 border-t-0"
+          )}
+        >
+          {OPTIONS.map((opt) => (
+            <button
+              key={opt}
+              type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                setValue(opt);
+                setOpen(false);
+                onBlur?.();
+              }}
+              className={cn(
+                "w-full h-[50px] px-4 text-left text-base text-gray-700",
+                "border-t border-gray-300",
+                value === opt && "bg-gray-100 font-medium"
+              )}
+            >
+              {opt}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 export default function PersonalDetails() {
   const router = useRouter();
 
@@ -44,7 +118,6 @@ export default function PersonalDetails() {
       yyyy: true,
     });
 
-  // --- validation
   const titleV: Validation = validateRequired(title);
   const firstNameV: Validation = validateLettersOnly(firstName);
   const surnameV: Validation = validateLettersOnly(surname);
@@ -82,31 +155,15 @@ export default function PersonalDetails() {
         </p>
       </header>
 
-      {/* Title */}
       <div className="w-[88px] space-y-1">
         <div className="relative">
-          <select
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onBlur={() => touch("title")}
-            aria-invalid={Boolean(titleError) || undefined}
-            className={cn(
-              "w-full h-[50px] appearance-none bg-white px-4 text-base text-left text-gray-500 outline-none rounded-none",
-              titleError ? "border-2 border-[#FF004F]" : "border border-gray-400"
-            )}
-          >
-            <option value="" disabled hidden className="text-gray-500">
-              Title
-            </option>
-            <option className="text-gray-700">Mr</option>
-            <option className="text-gray-700">Miss</option>
-            <option className="text-gray-700">Mrs</option>
-            <option className="text-gray-700">Ms</option>
-          </select>
-
-          <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 text-[10px]">
-            ▼
-          </span>
+            <TitleSelect
+              value={title}
+              setValue={setTitle}
+              error={Boolean(titleError)}
+              onBlur={() => touch("title")}
+            />
+            {titleError && <p className="error-text">{titleError}</p>}
         </div>
 
         {titleError && <p className="error-text">{titleError}</p>}
