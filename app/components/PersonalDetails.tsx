@@ -7,6 +7,8 @@ import { ROUTES } from "../routes";
 import { cn } from "../utils/cn";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 import { TextInput } from "./ui/TextInput";
+import { useAppDispatch } from "../store/hooks";
+import { setFirstName as setReduxFirstName } from "../store/userSlice";
 
 import { validateRequired, validateLettersOnly, validateDOB } from "../utils/validator";
 
@@ -88,6 +90,7 @@ function TitleSelect({
 }
 export default function PersonalDetails() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -128,6 +131,7 @@ export default function PersonalDetails() {
   const handleNext = () => {
     touchAll();
     if (!allValid) return;
+    dispatch(setReduxFirstName(firstName));
     router.push(ROUTES.CONTACT_DETAILS);
   };
 

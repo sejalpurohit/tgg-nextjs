@@ -1,4 +1,3 @@
-
 "use client";
 
 import { usePathname } from "next/navigation";
@@ -8,7 +7,7 @@ import { INFO_STRIP_TEXT, DEFAULT_INFO_STRIP } from "../infostripMessages";
 
 export default function StickyHeader() {
   const pathname = usePathname();
-  const text = INFO_STRIP_TEXT[pathname] ?? DEFAULT_INFO_STRIP;
+  const text = (pathname && INFO_STRIP_TEXT[pathname]) ?? DEFAULT_INFO_STRIP;
 
   return (
     <>

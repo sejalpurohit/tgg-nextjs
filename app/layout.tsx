@@ -4,6 +4,7 @@ import "./globals.css";
 import StickyHeader from "./components/StickyHeader";
 import Footer from "./components/Footer";
 import { Providers } from "./providers";
+import StoreProvider from "./store/StoreProvider";
 
 export const metadata: Metadata = {
   title: "PCP Pal",
@@ -26,15 +27,17 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Providers>
-          <header className="fixed inset-x-0 top-0 z-50">
-            <StickyHeader />
-          </header>
+          <StoreProvider>
+            <header className="fixed inset-x-0 top-0 z-50">
+              <StickyHeader />
+            </header>
 
-          <main className="pt-[104px]">
-            <div className="mx-auto max-w-md px-4">{children}</div>
-          </main>
+            <main className="pt-[104px]">
+              <div className="mx-auto max-w-md px-4">{children}</div>
+            </main>
 
-          <Footer />
+            <Footer />
+          </StoreProvider>
         </Providers>
       </body>
     </html>
