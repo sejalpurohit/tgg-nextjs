@@ -53,9 +53,9 @@ export default function ContactDetails() {
   );
 
   return (
-    <section className="page">
+    <section className="page w-full">
       <header className="flex items-start justify-between gap-4 pt-2">
-        <div>
+        <div className="flex-1 min-w-0">
           <h1 className="text-[34px] font-extrabold leading-tight">
             Enter Mobile Number and Email Address
           </h1>
@@ -66,7 +66,13 @@ export default function ContactDetails() {
           </p>
         </div>
 
-        <Image src={ContactIcon} alt="Contact icon" width={88} height={88} />
+        <Image
+          src={ContactIcon}
+          alt="Contact icon"
+          width={88}
+          height={88}
+          className="flex-shrink-0"
+        />
       </header>
 
       <hr className="border-gray-200" />

@@ -73,7 +73,7 @@ export default function ThankYou() {
       <div className="flex items-start justify-between gap-4 pt-2">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
-            Congratulations {firstName || "User"}<br />your claim is now<br />submitted.
+            Congratulations {firstName || "User"} your claim is now submitted.
           </h1>
           <p className="text-lg text-gray-700 mt-3">Your potential claim value is</p>
           <p className="text-4xl font-extrabold text-green-500 mt-1">£15,954.75*</p>

@@ -25,18 +25,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gray-100">
         <Providers>
           <StoreProvider>
-            <header className="fixed inset-x-0 top-0 z-50">
-              <StickyHeader />
-            </header>
+            <div className="mx-auto max-w-md min-h-screen bg-white shadow-xl">
+              <header className="sticky top-0 z-50">
+                <StickyHeader />
+              </header>
 
-            <main className="pt-[104px]">
-              <div className="mx-auto max-w-md px-4">{children}</div>
-            </main>
+              <main>
+                <div className="px-4">{children}</div>
+              </main>
 
-            <Footer />
+              <Footer />
+            </div>
           </StoreProvider>
         </Providers>
       </body>

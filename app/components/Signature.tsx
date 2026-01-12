@@ -120,7 +120,7 @@ export default function Signature() {
     <section className="px-4 space-y-6">
       <div className="pt-2">
         <h1 className="text-[40px] font-extrabold leading-tight text-gray-900">
-          <span className="text-green-500">Great News,</span>{" "}
+          <span className="text-green-500">Great News </span>{" "}
           <span>{firstName || "User"},</span>
           <br />
           we've found 3 claims
