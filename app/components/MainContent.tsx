@@ -20,10 +20,8 @@ export default function MainContent() {
 
   return (
     <section className="px-4 space-y-6">
-      <h1 className="text-[32px] font-extrabold leading-tight">
-        You could be owed up to{" "}
-        <span className="font-extrabold">£5,318.25*</span> per car finance
-        agreement.
+      <h1 className="text-[30px] font-extrabold">
+        You could be owed up to £5,318.25* per car finance agreement .
       </h1>
 
       <p className="text-base text-gray-600">
@@ -32,7 +30,7 @@ export default function MainContent() {
 
       <button
         onClick={() => router.push(ROUTES.CURRENT_ADDRESS)}
-        className="w-full flex justify-center transition"
+        className="w-full flex justify-center"
       >
         <Image src={SearchButton} alt="Find My Agreements" width={360} height={72} />
       </button>
@@ -56,7 +54,7 @@ export default function MainContent() {
 
       <div className="space-y-4">
         <div className="bg-black text-white  px-4 py-6 space-y-4 -mx-4">
-          <p className="text-base font-normal text-left">
+          <p className="text-base text-left">
             We will locate all of your vehicle finance agreements with all these
             73 lenders.
           </p>

@@ -5,9 +5,17 @@ import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
 import TrustAndClaimValue from "./TrustAndClaimValue";
+import { useAppSelector } from "../store/hooks";
 
 export default function Signature() {
   const router = useRouter();
+  const reduxFirstName = useAppSelector((state) => state.user.firstName);
+  const [firstName, setFirstName] = useState("");
+
+
+  useEffect(() => {
+    setFirstName(reduxFirstName);
+  }, [reduxFirstName]);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -113,13 +121,14 @@ export default function Signature() {
       <div className="pt-2">
         <h1 className="text-[40px] font-extrabold leading-tight text-gray-900">
           <span className="text-green-500">Great News,</span>{" "}
-          <span>David,</span>
+          <span>{firstName || "User"},</span>
           <br />
-          we’ve found 3 claims
+          we've found 3 claims
         </h1>
 
         <p className="text-[22px] text-gray-800 leading-relaxed mt-4">
-          Submit your claim to reveal your lenders and potential compensation amount.
+          Submit your claim to reveal your lenders and potential compensation
+          amount.
         </p>
 
         <p className="text-[18px] text-gray-600 leading-relaxed mt-4">

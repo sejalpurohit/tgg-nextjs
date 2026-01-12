@@ -9,6 +9,7 @@
   --background: #ffffff;
   --foreground: #171717;
   --font-family: TikTok, sans-serif;
+  --brand: #FF0000;
 }
 
 html,
@@ -18,13 +19,11 @@ body {
   font-family: var(--font-family);
 }
 
-
 @layer components {
   .page {
     @apply space-y-6;
   }
 
-  /* Shared form styles */
   .control {
     @apply w-full h-[50px] px-4 text-lg outline-none border-2 rounded-none bg-gray-100 border-transparent;
   }

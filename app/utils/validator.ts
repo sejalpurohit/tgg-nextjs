@@ -87,7 +87,7 @@ export function validateLettersOnly(value: string): ValidationResult {
 }
 
 export function validateDOB(dd: string, mm: string, yyyy: string): ValidationResult {
-  // required checks (reuse existing)
+
   const r1 = validateRequired(dd);
   if (!r1.ok) return r1;
   const r2 = validateRequired(mm);
@@ -133,4 +133,9 @@ export function validateEmailSimple(value: string): ValidationResult {
   return /^[A-Za-z0-9@.]+$/.test(v) && !/\s/.test(v) && v.includes("@") && v.includes(".")
     ? ok()
     : fail("Enter a valid email address.");
+}
+
+
+export function sanitizeEmail(value: string): string {
+  return value.replace(/[^A-Za-z0-9@._+-]/g, "").trim();
 }

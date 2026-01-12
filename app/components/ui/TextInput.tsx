@@ -25,7 +25,7 @@ export function TextInput({
 
   return (
     <div className="space-y-1">
-      <div className="relative">
+      <div className="relative" suppressHydrationWarning>
         <input
           {...props}
           value={value}
@@ -33,10 +33,11 @@ export function TextInput({
           aria-invalid={hasError || undefined}
           className={cn(
             "control",
-            rightSlot && "pr-24",
+            rightSlot ? "pr-24" : "",
             hasError && "control-error",
             className
           )}
+          suppressHydrationWarning
         />
         {rightSlot && (
           <div className="absolute right-4 top-1/2 -translate-y-1/2">

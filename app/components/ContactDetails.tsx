@@ -13,7 +13,11 @@ import SecureSSL from "../../public/icons/secure-ssl.svg";
 import ContactIcon from "../../public/icons/contactIcon.svg";
 import SearchButton from "../../public/icons/searchButton.svg";
 
-import { validateUKMobile, validateEmailSimple } from "../utils/validator";
+import {
+  validateUKMobile,
+  validateEmailSimple,
+  sanitizeEmail,
+} from "../utils/validator";
 
 type Validation = { ok: true } | { ok: false; message: string };
 
@@ -34,8 +38,7 @@ export default function ContactDetails() {
   const mobileError =
     touched.mobile && !mobileV.ok ? mobileV.message : undefined;
 
-  const emailError =
-    touched.email && !emailV.ok ? emailV.message : undefined;
+  const emailError = touched.email && !emailV.ok ? emailV.message : undefined;
 
   const allValid = mobileV.ok && emailV.ok;
 
@@ -44,10 +47,6 @@ export default function ContactDetails() {
     if (!allValid) return;
     router.push(ROUTES.SIGNATURE);
   };
-
-  const digitsOnly11 = (v: string) => v.replace(/\D/g, "").slice(0, 11);
-  const emailAllowed = (v: string) =>
-    v.replace(/[^A-Za-z0-9@._+-]/g, "").trim();
 
   const sslBadge = (
     <Image src={SecureSSL} alt="Secure SSL" width={70} height={28} />
@@ -58,16 +57,11 @@ export default function ContactDetails() {
       <header className="flex items-start justify-between gap-4 pt-2">
         <div>
           <h1 className="text-[34px] font-extrabold leading-tight">
-            Enter Mobile Number
-            <br />
-            and Email Address
+            Enter Mobile Number and Email Address
           </h1>
 
           <p className="text-[18px] text-gray-600 leading-relaxed mt-4">
-            We will use these details to
-            <br />
-            cross reference any car finance
-            <br />
+            We will use these details to cross reference any car finance
             agreements you’ve had.
           </p>
         </div>
@@ -85,10 +79,13 @@ export default function ContactDetails() {
 
         <TextInput
           value={mobile}
-          onValueChange={(v) => setMobile(digitsOnly11(v))}
+          onValueChange={(v) => setMobile(v.replace(/\D/g, ""))}
           onBlur={() => touch("mobile")}
           placeholder="Enter Mobile Number"
-          inputMode="tel"
+          type="tel"
+          inputMode="numeric"
+          maxLength={15}
+          pattern="[0-9]*"
           error={mobileError}
           rightSlot={sslBadge}
         />
@@ -104,7 +101,7 @@ export default function ContactDetails() {
 
         <TextInput
           value={email}
-          onValueChange={(v) => setEmail(emailAllowed(v))}
+          onValueChange={(v) => setEmail(sanitizeEmail(v))}
           onBlur={() => touch("email")}
           placeholder="Enter Email Address"
           inputMode="email"

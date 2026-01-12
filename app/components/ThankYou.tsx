@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import TrustAndClaimValue from "./TrustAndClaimValue";
+import { useAppSelector } from "../store/hooks";
 
 import CongratsIcon from "../../public/icons/congratulations.svg";
 import CourmacsLogo from "../../public/icons/courmacsLogo.svg";
@@ -48,6 +49,14 @@ function CheckItem({ text }: { text: string }) {
 }
 
 export default function ThankYou() {
+  const reduxFirstName = useAppSelector((state) => state.user.firstName);
+  const [firstName, setFirstName] = useState("");
+
+
+  useEffect(() => {
+    setFirstName(reduxFirstName);
+  }, [reduxFirstName]);
+
   const [reg, setReg] = useState("");
   const [rating, setRating] = useState(0);
   const [fileName, setFileName] = useState("");
@@ -60,11 +69,11 @@ export default function ThankYou() {
 
   return (
     <section className="px-4 space-y-6 font-tiktok">
-      {/* Header */}
+     
       <div className="flex items-start justify-between gap-4 pt-2">
         <div>
           <h1 className="text-4xl font-extrabold leading-tight">
-            Congratulations (name)<br />your claim is now<br />submitted.
+            Congratulations {firstName || "User"}<br />your claim is now<br />submitted.
           </h1>
           <p className="text-lg text-gray-700 mt-3">Your potential claim value is</p>
           <p className="text-4xl font-extrabold text-green-500 mt-1">£15,954.75*</p>
@@ -72,7 +81,7 @@ export default function ThankYou() {
         <Image src={CongratsIcon} alt="Congratulations" width={64} height={64} />
       </div>
 
-      {/* Agreements Dropdown */}
+   
       <div className="relative">
         {isAgreementsOpen && (
           <button
@@ -96,7 +105,7 @@ export default function ThankYou() {
         )}
       </div>
 
-      {/* Registration Search */}
+  
       <div className="space-y-2">
         <h2 className="text-3xl font-extrabold leading-tight">
           Feel like we've missed<br />something?
@@ -134,7 +143,7 @@ export default function ThankYou() {
 
       <Divider />
 
-      {/* Next Steps */}
+  
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-3xl font-extrabold">Next steps</h2>
@@ -187,7 +196,6 @@ export default function ThankYou() {
 
       <Divider />
 
-      {/* Upload */}
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -226,7 +234,6 @@ export default function ThankYou() {
         </div>
       </div>
 
-      {/* Legal */}
       <div className="space-y-3 pt-2">
         <h2 className="text-2xl font-extrabold">Legal Obligations</h2>
         <div className="space-y-4">

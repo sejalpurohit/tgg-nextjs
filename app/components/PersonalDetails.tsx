@@ -165,8 +165,6 @@ export default function PersonalDetails() {
             />
             {titleError && <p className="error-text">{titleError}</p>}
         </div>
-
-        {titleError && <p className="error-text">{titleError}</p>}
       </div>
 
       <TextInput

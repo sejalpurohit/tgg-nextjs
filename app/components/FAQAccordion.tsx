@@ -75,7 +75,7 @@ export default function FAQAccordion() {
         <button
           type="button"
           onClick={() => router.push(ROUTES.CURRENT_ADDRESS)}
-          className="w-full flex justify-center active:scale-[0.98] transition"
+          className="w-full flex justify-center"
           aria-label="Find my agreements"
         >
           <Image src={SearchButton} alt="Find My Agreements" width={360} height={72} />
