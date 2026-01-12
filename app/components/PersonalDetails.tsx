@@ -4,16 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
+import { cn } from "../utils/cn";
 import TrustAndClaimValue from "./TrustAndClaimValue";
+import { TextInput } from "./ui/TextInput";
 
 import { validateRequired, validateLettersOnly, validateDOB } from "../utils/validator";
 
 type Validation = { ok: true } | { ok: false; message: string };
-
-function FieldError({ show, message }: { show: boolean; message?: string }) {
-  if (!show) return null;
-  return <p className="mt-1 text-[#FF004F] text-sm font-semibold font-tiktok">{message}</p>;
-}
 
 export default function PersonalDetails() {
   const router = useRouter();
@@ -37,17 +34,7 @@ export default function PersonalDetails() {
   const touch = (k: keyof typeof touched) =>
     setTouched((p) => ({ ...p, [k]: true }));
 
-  // --- validation
-  const titleV: Validation = validateRequired(title);
-  const firstNameV: Validation = validateLettersOnly(firstName); // required included
-  const surnameV: Validation = validateLettersOnly(surname); // required included
-
-  // ✅ DOB validation (single result for dd/mm/yyyy)
-  const dobV: Validation = validateDOB(dd, mm, yyyy);
-
-  const allValid = titleV.ok && firstNameV.ok && surnameV.ok && dobV.ok;
-
-  const handleNext = () => {
+  const touchAll = () =>
     setTouched({
       title: true,
       firstName: true,
@@ -57,6 +44,16 @@ export default function PersonalDetails() {
       yyyy: true,
     });
 
+  // --- validation
+  const titleV: Validation = validateRequired(title);
+  const firstNameV: Validation = validateLettersOnly(firstName);
+  const surnameV: Validation = validateLettersOnly(surname);
+  const dobV: Validation = validateDOB(dd, mm, yyyy);
+
+  const allValid = titleV.ok && firstNameV.ok && surnameV.ok && dobV.ok;
+
+  const handleNext = () => {
+    touchAll();
     if (!allValid) return;
     router.push(ROUTES.CONTACT_DETAILS);
   };
@@ -66,29 +63,37 @@ export default function PersonalDetails() {
   const digitsOnly = (v: string, maxLen: number) =>
     v.replace(/\D/g, "").slice(0, maxLen);
 
+  const titleError = touched.title && !titleV.ok ? titleV.message : undefined;
+  const firstNameError =
+    touched.firstName && !firstNameV.ok ? firstNameV.message : undefined;
+  const surnameError =
+    touched.surname && !surnameV.ok ? surnameV.message : undefined;
+
   const dobTouched = touched.dd || touched.mm || touched.yyyy;
-  const dobHasError = dobTouched && !dobV.ok;
+  const dobError = dobTouched && !dobV.ok ? dobV.message : undefined;
 
   return (
-    <section className="px-4 space-y-6">
-      <h1 className="pt-6 text-[24px] font-semibold">Your Personal Details</h1>
-      <p className="text-[16px] text-gray-600 leading-relaxed -mt-4">
-        Your current personal details are essential to search for all finance agreements attached to your name.
-      </p>
+    <section className="page">
+      <header className="space-y-2 pt-6">
+        <h1 className="text-[24px] font-semibold">Your Personal Details</h1>
+        <p className="text-base text-gray-600 leading-relaxed">
+          Your current personal details are essential to search for all finance
+          agreements attached to your name.
+        </p>
+      </header>
 
       {/* Title */}
-      <div className="w-[88px]">
+      <div className="w-[88px] space-y-1">
         <div className="relative">
           <select
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             onBlur={() => touch("title")}
-            className={[
-              "w-full h-[50px] appearance-none bg-white px-4 text-[16px] text-left   text-gray-500 outline-none",
-              touched.title && !titleV.ok
-                ? "border-0 border-[#FF004F] rounded-none"
-                : "border border-gray-400 rounded-none",
-            ].join(" ")}
+            aria-invalid={Boolean(titleError) || undefined}
+            className={cn(
+              "w-full h-[50px] appearance-none bg-white px-4 text-base text-left text-gray-500 outline-none rounded-none",
+              titleError ? "border-2 border-[#FF004F]" : "border border-gray-400"
+            )}
           >
             <option value="" disabled hidden className="text-gray-500">
               Title
@@ -102,123 +107,74 @@ export default function PersonalDetails() {
           <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-gray-700 text-[10px]">
             ▼
           </span>
-
-          <FieldError
-            show={touched.title && !titleV.ok}
-            message={titleV.ok ? undefined : titleV.message}
-          />
         </div>
+
+        {titleError && <p className="error-text">{titleError}</p>}
       </div>
 
-      {/* First Name */}
-      <div>
-        <input
-          value={firstName}
-          onChange={(e) => setFirstName(lettersOnly(e.target.value))}
-          onBlur={() => touch("firstName")}
-          placeholder="First Name"
-          className={[
-            "w-full px-4 h-[50px] text-[18px] outline-none font-tiktok",
-            touched.firstName && !firstNameV.ok
-              ? "bg-white border-2 border-[#FF004F] rounded-none"
-              : "bg-gray-100 border-2 border-transparent rounded-none",
-          ].join(" ")}
-        />
-        <FieldError
-          show={touched.firstName && !firstNameV.ok}
-          message={firstNameV.ok ? undefined : firstNameV.message}
-        />
-      </div>
+      <TextInput
+        value={firstName}
+        onValueChange={(v) => setFirstName(lettersOnly(v))}
+        onBlur={() => touch("firstName")}
+        placeholder="First Name"
+        error={firstNameError}
+      />
 
-      {/* Surname */}
-      <div>
-        <input
-          value={surname}
-          onChange={(e) => setSurname(lettersOnly(e.target.value))}
-          onBlur={() => touch("surname")}
-          placeholder="Surname"
-          className={[
-            "w-full px-4 h-[50px] text-[18px] outline-none font-tiktok",
-            touched.surname && !surnameV.ok
-              ? "bg-white border-2 border-[#FF004F] rounded-none"
-              : "bg-gray-100 border-2 border-transparent rounded-none",
-          ].join(" ")}
-        />
-        <FieldError
-          show={touched.surname && !surnameV.ok}
-          message={surnameV.ok ? undefined : surnameV.message}
-        />
-      </div>
+      <TextInput
+        value={surname}
+        onValueChange={(v) => setSurname(lettersOnly(v))}
+        onBlur={() => touch("surname")}
+        placeholder="Surname"
+        error={surnameError}
+      />
 
       {/* DOB */}
       <div className="space-y-3">
-        <p className="text-[16px] text-gray-800/80 text-s">Date of Birth</p>
+        <p className="text-base text-gray-700">Date of Birth</p>
 
-        <div className="flex gap-4">
-          <div className="w-1/3">
-            <input
-              value={dd}
-              onChange={(e) => setDd(digitsOnly(e.target.value, 2))}
-              onBlur={() => touch("dd")}
-              placeholder="DD"
-              type="number"
-              inputMode="numeric"
-              className={[
-                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
-                dobHasError
-                  ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-none",
-              ].join(" ")}
-            />
-          </div>
+        <div className="grid grid-cols-3 gap-4">
+          <input
+            value={dd}
+            onChange={(e) => setDd(digitsOnly(e.target.value, 2))}
+            onBlur={() => touch("dd")}
+            placeholder="DD"
+            inputMode="numeric"
+            pattern="\d*"
+            className={cn("control text-center", dobError && "control-error")}
+          />
 
-          <div className="w-1/3">
-            <input
-              value={mm}
-              onChange={(e) => setMm(digitsOnly(e.target.value, 2))}
-              onBlur={() => touch("mm")}
-              placeholder="MM"
-              type="number"
-              inputMode="numeric"
-              className={[
-                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
-                dobHasError
-                  ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-none",
-              ].join(" ")}
-            />
-          </div>
+          <input
+            value={mm}
+            onChange={(e) => setMm(digitsOnly(e.target.value, 2))}
+            onBlur={() => touch("mm")}
+            placeholder="MM"
+            inputMode="numeric"
+            pattern="\d*"
+            className={cn("control text-center", dobError && "control-error")}
+          />
 
-          <div className="w-1/3">
-            <input
-              value={yyyy}
-              onChange={(e) => setYyyy(digitsOnly(e.target.value, 4))}
-              onBlur={() => touch("yyyy")}
-              placeholder="YYYY"
-              type="number"
-              inputMode="numeric"
-              className={[
-                "w-full px-4 h-[50px] text-[18px] outline-none text-center font-tiktok",
-                dobHasError
-                  ? "bg-white border-2 border-[#FF004F] rounded-none"
-                  : "bg-gray-100 border-2 border-transparent rounded-none",
-              ].join(" ")}
-            />
-          </div>
+          <input
+            value={yyyy}
+            onChange={(e) => setYyyy(digitsOnly(e.target.value, 4))}
+            onBlur={() => touch("yyyy")}
+            placeholder="YYYY"
+            inputMode="numeric"
+            pattern="\d*"
+            className={cn("control text-center", dobError && "control-error")}
+          />
         </div>
 
-        <FieldError
-          show={dobHasError}
-          message={dobV.ok ? undefined : dobV.message}
-        />
+        {dobError && <p className="error-text">{dobError}</p>}
       </div>
 
       <button
         type="button"
         onClick={handleNext}
         disabled={!allValid}
-        className={`w-full rounded-md py-4 text-[22px] h-[50px] font-semibold text-white flex items-center justify-center gap-3 transition-colors font-tiktok ${allValid ? "bg-[#FF004F]" : "bg-gray-300"
-          }`}
+        className={cn(
+          "w-full h-[50px] rounded-md text-[22px] font-semibold text-white flex items-center justify-center gap-3 transition-colors",
+          allValid ? "bg-[#FF004F]" : "bg-gray-300"
+        )}
       >
         Next <span className="text-[26px] leading-none">›</span>
       </button>

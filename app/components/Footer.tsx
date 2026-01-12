@@ -5,19 +5,13 @@ export default function Footer() {
     <>
       <FooterLegal />
 
-      <footer className="bg-black py-4 font-tiktok">
+      <footer className="bg-black py-4">
         <nav className="flex justify-center items-center gap-3 text-xs text-gray-300">
-          <span className="underline cursor-pointer hover:text-white">
-            Terms & Conditions
-          </span>
-          <span>|</span>
-          <span className="underline cursor-pointer hover:text-white">
-            Complaints Procedure
-          </span>
-          <span>|</span>
-          <span className="underline cursor-pointer hover:text-white">
-            Privacy Policy
-          </span>
+          <span className="footer-link">Terms & Conditions</span>
+          <span aria-hidden="true">|</span>
+          <span className="footer-link">Complaints Procedure</span>
+          <span aria-hidden="true">|</span>
+          <span className="footer-link">Privacy Policy</span>
         </nav>
       </footer>
     </>

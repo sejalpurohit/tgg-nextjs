@@ -1,4 +1,3 @@
-
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
@@ -11,11 +10,12 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
 };
+
 export default function RootLayout({
   children,
 }: {
@@ -23,12 +23,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-white text-black">
-        <div className="fixed top-0 left-0 right-0 z-50">
+      <body>
+        <header className="fixed inset-x-0 top-0 z-50">
           <StickyHeader />
-        </div>
+        </header>
 
-        <main className="pt-[104px]">{children}</main>
+        <main className="pt-[104px]">
+          <div className="mx-auto max-w-md px-4">{children}</div>
+        </main>
 
         <Footer />
       </body>

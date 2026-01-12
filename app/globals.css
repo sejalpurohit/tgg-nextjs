@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: TikTok;
-  src: url('@/public/fonts/tiktoksans-variable.ttf');
+  src: url("/fonts/tiktoksans-variable.ttf");
 }
 
 :root {
@@ -11,12 +11,35 @@
   --font-family: TikTok, sans-serif;
 }
 
-html, body {
+html,
+body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-family);
 }
 
-* {
-  font-family: inherit;
+
+@layer components {
+  .page {
+    @apply space-y-6;
+  }
+
+  /* Shared form styles */
+  .control {
+    @apply w-full h-[50px] px-4 text-lg outline-none border-2 rounded-none bg-gray-100 border-transparent;
+  }
+
+  .control-error {
+    @apply bg-white border-2 rounded-none;
+    border-color: var(--brand);
+  }
+
+  .error-text {
+    @apply mt-1 text-sm font-semibold;
+    color: var(--brand);
+  }
+
+  .footer-link {
+    @apply underline cursor-pointer hover:text-white;
+  }
 }

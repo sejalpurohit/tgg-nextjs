@@ -5,7 +5,10 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { ROUTES } from "../routes";
+import { cn } from "../utils/cn";
+
 import TrustAndClaimValue from "./TrustAndClaimValue";
+import { TextInput } from "./ui/TextInput";
 import HomeIcon from "../../public/icons/homeIcon.svg";
 
 import {
@@ -16,45 +19,6 @@ import {
   validateLettersOnly,
   type ValidationResult,
 } from "../utils/validator";
-
-type InputProps = {
-  value: string;
-  placeholder: string;
-  hasError: boolean;
-  errorText?: string;
-  onChange: (v: string) => void;
-  onBlur: () => void;
-};
-
-function ValidatedInput({
-  value,
-  placeholder,
-  hasError,
-  errorText,
-  onChange,
-  onBlur,
-}: InputProps) {
-  return (
-    <div>
-      <input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        onBlur={onBlur}
-        placeholder={placeholder}
-        aria-invalid={hasError}
-        className={[
-          "w-full px-3 h-[50px] text-base outline-none",
-          hasError
-            ? "bg-white border-2 border-[#FF004F] rounded-none"
-            : "bg-gray-100 border-2 border-transparent rounded-none",
-        ].join(" ")}
-      />
-      {hasError && (
-        <p className="mt-1 text-[#FF004F] text-sm font-semibold">{errorText}</p>
-      )}
-    </div>
-  );
-}
 
 export default function CurrentAddress() {
   const router = useRouter();
@@ -110,18 +74,21 @@ export default function CurrentAddress() {
   const postcodeV = validatePostcode(postcode);
   const address1V = validateGenericField(address1);
   const address2V = validateGenericField(address2);
-
   const townCityV = validateLettersOnly(townCity);
   const countyV = validateLettersOnly(county);
 
-  const postcodeHasError = touched.postcode && !postcodeV.ok;
-  const address1HasError = touched.address1 && !address1V.ok;
-  const address2HasError = touched.address2 && !address2V.ok;
-  const townCityHasError = touched.townCity && !townCityV.ok;
-  const countyHasError = touched.county && !countyV.ok;
+  const postcodeError =
+    touched.postcode && !postcodeV.ok ? postcodeV.message : undefined;
+  const address1Error =
+    touched.address1 && !address1V.ok ? address1V.message : undefined;
+  const address2Error =
+    touched.address2 && !address2V.ok ? address2V.message : undefined;
+  const townCityError =
+    touched.townCity && !townCityV.ok ? townCityV.message : undefined;
+  const countyError =
+    touched.county && !countyV.ok ? countyV.message : undefined;
 
   const isPostcodeValid = postcodeV.ok;
-
   const allAddressValid =
     address1V.ok && address2V.ok && townCityV.ok && countyV.ok;
 
@@ -140,13 +107,12 @@ export default function CurrentAddress() {
       county: true,
     }));
     if (!allAddressValid) return;
-
     router.push(ROUTES.PERSONAL_DETAILS);
   };
 
   return (
-    <section className="px-4 space-y-6">
-      <div className="flex items-start justify-between gap-4">
+    <section className="page">
+      <header className="flex items-start justify-between gap-4">
         <div className="space-y-3">
           <h1 className="text-2xl font-extrabold">Your Current Address</h1>
           <p className="text-base text-gray-600">
@@ -154,39 +120,40 @@ export default function CurrentAddress() {
           </p>
         </div>
         <Image src={HomeIcon} alt="Home" width={56} height={56} />
-      </div>
+      </header>
 
-      <p className="text-base text-gray-700">Enter your postcode and tap 'Search'.</p>
+      <p className="text-base text-gray-700">
+        Enter your postcode and tap 'Search'.
+      </p>
 
-      <div className="flex items-center gap-3">
-        <div className="w-[197px]">
-          <ValidatedInput
-            value={postcode}
-            placeholder="Postcode"
-            hasError={postcodeHasError}
-            errorText={postcodeV.ok ? undefined : postcodeV.message}
-            onBlur={() => touch("postcode")}
-            onChange={(raw) => {
-              const cleaned = sanitizeText(raw, {
-                allowComma: false,
-                allowSpace: true,
-                maxLen: 8,
-                toUpperCase: true,
-              });
-              setPostcode(cleaned);
+      <div className="grid grid-cols-[197px_1fr] items-start gap-3">
+        <TextInput
+          value={postcode}
+          placeholder="Postcode"
+          onBlur={() => touch("postcode")}
+          error={postcodeError}
+          onValueChange={(raw) => {
+            const cleaned = sanitizeText(raw, {
+              allowComma: false,
+              allowSpace: true,
+              maxLen: 8,
+              toUpperCase: true,
+            });
 
-              if (!cleaned.trim()) resetAddress();
-            }}
-          />
-        </div>
+            setPostcode(cleaned);
+
+            if (!cleaned.trim()) resetAddress();
+          }}
+        />
 
         <button
           type="button"
           onClick={handleSearch}
           disabled={!isPostcodeValid}
-          className={`min-w-[132px] h-[35px] rounded-full px-6 text-base font-semibold text-white flex items-center justify-center ${
+          className={cn(
+            "min-w-[132px] h-[35px] mt-2 rounded-full px-6 text-base font-semibold text-white flex items-center justify-center",
             isPostcodeValid ? "bg-[#FF004F]" : "bg-[#B8B8BE]"
-          }`}
+          )}
         >
           Search
         </button>
@@ -194,39 +161,36 @@ export default function CurrentAddress() {
 
       {showAddressFields && (
         <div className="space-y-4">
-          <ValidatedInput
+          <TextInput
             value={address1}
             placeholder="Address Line 1"
-            hasError={address1HasError}
-            errorText={address1V.ok ? undefined : address1V.message}
             onBlur={() => touch("address1")}
-            onChange={(raw) =>
+            error={address1Error}
+            onValueChange={(raw) =>
               setAddress1(
                 sanitizeText(raw, { allowComma: false, allowSpace: true, maxLen: 80 })
               )
             }
           />
 
-          <ValidatedInput
+          <TextInput
             value={address2}
             placeholder="Address Line 2"
-            hasError={address2HasError}
-            errorText={address2V.ok ? undefined : address2V.message}
             onBlur={() => touch("address2")}
-            onChange={(raw) =>
+            error={address2Error}
+            onValueChange={(raw) =>
               setAddress2(
                 sanitizeText(raw, { allowComma: false, allowSpace: true, maxLen: 80 })
               )
             }
           />
 
-          <ValidatedInput
+          <TextInput
             value={townCity}
             placeholder="Town/City"
-            hasError={townCityHasError}
-            errorText={townCityV.ok ? undefined : townCityV.message}
             onBlur={() => touch("townCity")}
-            onChange={(raw) =>
+            error={townCityError}
+            onValueChange={(raw) =>
               setTownCity(
                 sanitizeText(raw, { allowComma: false, allowSpace: true, maxLen: 60 }).replace(
                   /[0-9]/g,
@@ -236,13 +200,12 @@ export default function CurrentAddress() {
             }
           />
 
-          <ValidatedInput
+          <TextInput
             value={county}
             placeholder="County"
-            hasError={countyHasError}
-            errorText={countyV.ok ? undefined : countyV.message}
             onBlur={() => touch("county")}
-            onChange={(raw) =>
+            error={countyError}
+            onValueChange={(raw) =>
               setCounty(
                 sanitizeText(raw, { allowComma: false, allowSpace: true, maxLen: 60 }).replace(
                   /[0-9]/g,
@@ -260,9 +223,10 @@ export default function CurrentAddress() {
             type="button"
             onClick={handleNext}
             disabled={!allAddressValid}
-            className={`w-full rounded-full py-3 text-base font-semibold text-white flex items-center justify-center gap-2 ${
+            className={cn(
+              "w-full rounded-full py-3 text-base font-semibold text-white flex items-center justify-center gap-2 transition-colors",
               allAddressValid ? "bg-[#FF004F]" : "bg-gray-300"
-            }`}
+            )}
           >
             Next <span className="text-lg leading-none">›</span>
           </button>

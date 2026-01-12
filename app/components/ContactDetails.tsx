@@ -4,24 +4,18 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import TrustAndClaimValue from "./TrustAndClaimValue";
 import { ROUTES } from "../routes";
+import { cn } from "../utils/cn";
+import TrustAndClaimValue from "./TrustAndClaimValue";
+import { TextInput } from "./ui/TextInput";
 
 import SecureSSL from "../../public/icons/secure-ssl.svg";
 import ContactIcon from "../../public/icons/contactIcon.svg";
 import SearchButton from "../../public/icons/searchButton.svg";
 
-import {
-  validateUKMobile,
-  validateEmailSimple,
-} from "../utils/validator";
+import { validateUKMobile, validateEmailSimple } from "../utils/validator";
 
 type Validation = { ok: true } | { ok: false; message: string };
-
-function FieldError({ show, message }: { show: boolean; message?: string }) {
-  if (!show) return null;
-  return <p className="mt-1 text-[#FF004F] text-sm font-semibold">{message}</p>;
-}
 
 export default function ContactDetails() {
   const router = useRouter();
@@ -29,20 +23,19 @@ export default function ContactDetails() {
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
 
-  const [touched, setTouched] = useState({
-    mobile: false,
-    email: false,
-  });
+  const [touched, setTouched] = useState({ mobile: false, email: false });
 
   const touch = (k: keyof typeof touched) =>
     setTouched((p) => ({ ...p, [k]: true }));
 
-  // ---- validation
   const mobileV: Validation = validateUKMobile(mobile);
   const emailV: Validation = validateEmailSimple(email);
 
-  const mobileHasError = touched.mobile && !mobileV.ok;
-  const emailHasError = touched.email && !emailV.ok;
+  const mobileError =
+    touched.mobile && !mobileV.ok ? mobileV.message : undefined;
+
+  const emailError =
+    touched.email && !emailV.ok ? emailV.message : undefined;
 
   const allValid = mobileV.ok && emailV.ok;
 
@@ -52,13 +45,17 @@ export default function ContactDetails() {
     router.push(ROUTES.SIGNATURE);
   };
 
-  // input sanitizers
   const digitsOnly11 = (v: string) => v.replace(/\D/g, "").slice(0, 11);
-  const emailAllowed = (v: string) => v.replace(/[^A-Za-z0-9@.]/g, "").trim();
+  const emailAllowed = (v: string) =>
+    v.replace(/[^A-Za-z0-9@._+-]/g, "").trim();
+
+  const sslBadge = (
+    <Image src={SecureSSL} alt="Secure SSL" width={70} height={28} />
+  );
 
   return (
-    <section className="px-4 space-y-6">
-      <div className="flex items-start justify-between gap-4 pt-2">
+    <section className="page">
+      <header className="flex items-start justify-between gap-4 pt-2">
         <div>
           <h1 className="text-[34px] font-extrabold leading-tight">
             Enter Mobile Number
@@ -76,46 +73,28 @@ export default function ContactDetails() {
         </div>
 
         <Image src={ContactIcon} alt="Contact icon" width={88} height={88} />
-      </div>
+      </header>
 
-      <div className="h-px bg-gray-200" />
+      <hr className="border-gray-200" />
 
-      {/* Mobile */}
-      <div className="space-y-2">
+      <section className="space-y-2">
         <h2 className="text-[32px] font-extrabold leading-tight">
           Your Mobile Number
         </h2>
         <p className="text-[18px] text-gray-600">For example: 07123456789</p>
 
-        <div className="relative">
-          <input
-            value={mobile}
-            onChange={(e) => setMobile(digitsOnly11(e.target.value))}
-            onBlur={() => touch("mobile")}
-            placeholder="Enter Mobile Number"
-            inputMode="tel"
-            aria-invalid={mobileHasError}
-            className={[
-              "w-full px-4 py-5 pr-24 text-[18px] outline-none",
-              mobileHasError
-                ? "bg-white border-2 border-[#FF004F] rounded-none"
-                : "bg-gray-100 border-2 border-transparent rounded-lg",
-            ].join(" ")}
-          />
-
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <Image src={SecureSSL} alt="Secure SSL" width={70} height={28} />
-          </div>
-        </div>
-
-        <FieldError
-          show={mobileHasError}
-          message={mobileV.ok ? undefined : mobileV.message}
+        <TextInput
+          value={mobile}
+          onValueChange={(v) => setMobile(digitsOnly11(v))}
+          onBlur={() => touch("mobile")}
+          placeholder="Enter Mobile Number"
+          inputMode="tel"
+          error={mobileError}
+          rightSlot={sslBadge}
         />
-      </div>
+      </section>
 
-      {/* Email */}
-      <div className="space-y-2 pt-2">
+      <section className="space-y-2 pt-2">
         <h2 className="text-[32px] font-extrabold leading-tight">
           Your Email Address
         </h2>
@@ -123,42 +102,33 @@ export default function ContactDetails() {
           For example: John@example.co.uk
         </p>
 
-        <div className="relative">
-          <input
-            value={email}
-            onChange={(e) => setEmail(emailAllowed(e.target.value))}
-            onBlur={() => touch("email")}
-            placeholder="Enter Email Address"
-            inputMode="email"
-            aria-invalid={emailHasError}
-            className={[
-              "w-full px-4 py-5 pr-24 text-[18px] outline-none",
-              emailHasError
-                ? "bg-white border-2 border-[#FF004F] rounded-none"
-                : "bg-gray-100 border-2 border-transparent rounded-lg",
-            ].join(" ")}
-          />
-
-          <div className="absolute right-4 top-1/2 -translate-y-1/2">
-            <Image src={SecureSSL} alt="Secure SSL" width={70} height={28} />
-          </div>
-        </div>
-
-        <FieldError
-          show={emailHasError}
-          message={emailV.ok ? undefined : emailV.message}
+        <TextInput
+          value={email}
+          onValueChange={(v) => setEmail(emailAllowed(v))}
+          onBlur={() => touch("email")}
+          placeholder="Enter Email Address"
+          inputMode="email"
+          error={emailError}
+          rightSlot={sslBadge}
         />
-      </div>
+      </section>
 
       <button
         type="button"
         onClick={handleFindAgreements}
         disabled={!allValid}
-        // className={`w-full rounded-full py-4 text-[22px] font-semibold text-white flex items-center justify-center gap-3 transition-colors ${
-        //   allValid ? "bg-[#FF004F]" : "bg-gray-300"
-        // }`}
+        aria-label="Find my agreements"
+        className={cn(
+          "w-full flex justify-center transition active:scale-[0.98]",
+          !allValid && "opacity-50"
+        )}
       >
-        <Image src={SearchButton} alt="Find My Agreements" width={360} height={72} />
+        <Image
+          src={SearchButton}
+          alt="Find My Agreements"
+          width={360}
+          height={72}
+        />
       </button>
 
       <TrustAndClaimValue />

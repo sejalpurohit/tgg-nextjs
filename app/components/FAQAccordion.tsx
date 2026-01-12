@@ -1,4 +1,3 @@
-// app/components/FAQAccordion.tsx
 "use client";
 
 import { useState } from "react";
@@ -13,7 +12,7 @@ type FAQItem = {
   answer: string;
 };
 
-const faqs: FAQItem[] = [
+const FAQS: FAQItem[] = [
   {
     question: "How do I determine if I qualify for compensation?",
     answer:
@@ -35,54 +34,51 @@ export default function FAQAccordion() {
   const router = useRouter();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleFAQ = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
-
   return (
-    <section className="px-4 pt-0 pb-4 bg-white font-tiktok">
+    <section className="px-4 py-4">
       <h2 className="text-2xl font-bold mb-4">Frequently Asked Questions</h2>
 
       <div className="divide-y divide-gray-200">
-        {faqs.map((faq, index) => (
-          <div key={index} className="py-4">
-            <button
-              onClick={() => toggleFAQ(index)}
-              className="w-full cursor-pointer font-medium text-gray-900 flex items-center text-left gap-3"
-            >
-              <span className="text-xl flex-shrink-0">
-                {openIndex === index ? "−" : "+"}
-              </span>
-              {faq.question}
-            </button>
+        {FAQS.map((faq, index) => {
+          const isOpen = openIndex === index;
+          const contentId = `faq-${index}`;
 
-            {openIndex === index && (
-              <p
-                className="mt-3 text-gray-600 pl-6"
-                style={{
-                  fontSize: "12px",
-                  lineHeight: "22px",
-                  marginBottom: "15px",
-                }}
+          return (
+            <div key={faq.question} className="py-4">
+              <button
+                type="button"
+                onClick={() => setOpenIndex(isOpen ? null : index)}
+                className="w-full cursor-pointer font-medium text-gray-900 flex items-start text-left gap-3"
+                aria-expanded={isOpen}
+                aria-controls={contentId}
               >
-                {faq.answer}
-              </p>
-            )}
-          </div>
-        ))}
+                <span className="text-xl flex-shrink-0 leading-none">
+                  {isOpen ? "−" : "+"}
+                </span>
+                <span>{faq.question}</span>
+              </button>
+
+              {isOpen && (
+                <p
+                  id={contentId}
+                  className="mt-3 pl-6 text-xs leading-[22px] text-gray-600 mb-[15px]"
+                >
+                  {faq.answer}
+                </p>
+              )}
+            </div>
+          );
+        })}
       </div>
 
       <div className="pt-6 pb-2">
         <button
+          type="button"
           onClick={() => router.push(ROUTES.CURRENT_ADDRESS)}
           className="w-full flex justify-center active:scale-[0.98] transition"
+          aria-label="Find my agreements"
         >
-          <Image
-            src={SearchButton}
-            alt="Find My Agreements"
-            width={360}
-            height={72}
-          />
+          <Image src={SearchButton} alt="Find My Agreements" width={360} height={72} />
         </button>
       </div>
     </section>
