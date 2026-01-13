@@ -3,7 +3,6 @@ import "./globals.css";
 
 import StickyHeader from "./components/StickyHeader";
 import Footer from "./components/Footer";
-import { Providers } from "./providers";
 import StoreProvider from "./store/StoreProvider";
 
 export const metadata: Metadata = {
@@ -26,21 +25,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-gray-100">
-        <Providers>
-          <StoreProvider>
-            <div className="mx-auto max-w-md min-h-screen bg-white shadow-xl">
-              <header className="sticky top-0 z-50">
-                <StickyHeader />
-              </header>
+        <StoreProvider>
+          <div className="mx-auto max-w-md min-h-screen bg-white shadow-xl">
+            <header className="sticky top-0 z-50">
+              <StickyHeader />
+            </header>
 
-              <main>
-                <div className="px-4">{children}</div>
-              </main>
+            <main>
+              <div className="px-4">{children}</div>
+            </main>
 
-              <Footer />
-            </div>
-          </StoreProvider>
-        </Providers>
+            <Footer />
+          </div>
+        </StoreProvider>
       </body>
     </html>
   );
