@@ -14,7 +14,6 @@ import { validateRequired, validateLettersOnly, validateDOB } from "../utils/val
 
 type Validation = { ok: true } | { ok: false; message: string };
 
-// TODO: Sejal: can be moved to a new component if needed
 const OPTIONS = ["Mr", "Miss", "Mrs", "Ms"];
 function TitleSelect({
   value,
@@ -135,7 +134,6 @@ export default function PersonalDetails() {
     router.push(ROUTES.CONTACT_DETAILS);
   };
 
-  // input helpers
   const lettersOnly = (v: string) => v.replace(/[^A-Za-z ]/g, "");
   const digitsOnly = (v: string, maxLen: number) =>
     v.replace(/\D/g, "").slice(0, maxLen);
@@ -186,8 +184,6 @@ export default function PersonalDetails() {
         placeholder="Surname"
         error={surnameError}
       />
-
-      {/* DOB */}
       <div className="space-y-3">
         <p className="text-base text-gray-700">Date of Birth</p>
 
