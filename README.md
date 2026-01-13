@@ -6,7 +6,7 @@
 
 ```bash
 npm install  # run once to install dependencies
-npm run dev  # start the development server```
+npm run dev  # start the development server
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
