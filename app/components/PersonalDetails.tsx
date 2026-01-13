@@ -8,7 +8,12 @@ import { cn } from "../utils/cn";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 import { TextInput } from "./ui/TextInput";
 import { useAppDispatch } from "../store/hooks";
-import { setFirstName as setReduxFirstName } from "../store/userSlice";
+import {
+  setTitle as setReduxTitle,
+  setFirstName as setReduxFirstName,
+  setSurname as setReduxSurname,
+  setDob as setReduxDob,
+} from "../store/userSlice";
 
 import { validateRequired, validateLettersOnly, validateDOB } from "../utils/validator";
 
@@ -130,7 +135,11 @@ export default function PersonalDetails() {
   const handleNext = () => {
     touchAll();
     if (!allValid) return;
+    dispatch(setReduxTitle(title));
     dispatch(setReduxFirstName(firstName));
+    dispatch(setReduxSurname(surname));
+    dispatch(setReduxDob({ dd, mm, yyyy }));
+
     router.push(ROUTES.CONTACT_DETAILS);
   };
 

@@ -49,13 +49,15 @@ function CheckItem({ text }: { text: string }) {
 }
 
 export default function ThankYou() {
-  const reduxFirstName = useAppSelector((state) => state.user.firstName);
+  const user = useAppSelector((state) => state.user);
   const [firstName, setFirstName] = useState("");
 
-
   useEffect(() => {
-    setFirstName(reduxFirstName);
-  }, [reduxFirstName]);
+    setFirstName(user.firstName);
+  }, [user.firstName]);
+  useEffect(() => {
+    console.log("User Details",user)
+  }, [user]);
 
   const [reg, setReg] = useState("");
   const [rating, setRating] = useState(0);

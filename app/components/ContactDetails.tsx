@@ -8,6 +8,11 @@ import { ROUTES } from "../routes";
 import { cn } from "../utils/cn";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 import { TextInput } from "./ui/TextInput";
+import { useAppDispatch } from "../store/hooks";
+import {
+  setMobile as setReduxMobile,
+  setEmail as setReduxEmail,
+} from "../store/userSlice";
 
 import SecureSSL from "../../public/icons/secure-ssl.svg";
 import ContactIcon from "../../public/icons/contactIcon.svg";
@@ -23,6 +28,7 @@ type Validation = { ok: true } | { ok: false; message: string };
 
 export default function ContactDetails() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
@@ -45,6 +51,10 @@ export default function ContactDetails() {
   const handleFindAgreements = () => {
     setTouched({ mobile: true, email: true });
     if (!allValid) return;
+
+    dispatch(setReduxMobile(mobile));
+    dispatch(setReduxEmail(email));
+
     router.push(ROUTES.SIGNATURE);
   };
 

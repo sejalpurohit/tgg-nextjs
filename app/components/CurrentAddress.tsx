@@ -10,6 +10,14 @@ import { cn } from "../utils/cn";
 import TrustAndClaimValue from "./TrustAndClaimValue";
 import { TextInput } from "./ui/TextInput";
 import HomeIcon from "../../public/icons/homeIcon.svg";
+import { useAppDispatch } from "../store/hooks";
+import {
+  setPostcode as setReduxPostcode,
+  setAddress1 as setReduxAddress1,
+  setAddress2 as setReduxAddress2,
+  setTownCity as setReduxTownCity,
+  setCounty as setReduxCounty,
+} from "../store/userSlice";
 
 import {
   sanitizeText,
@@ -22,6 +30,7 @@ import {
 
 export default function CurrentAddress() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const [postcode, setPostcode] = useState("");
   const [address1, setAddress1] = useState("");
@@ -107,6 +116,14 @@ export default function CurrentAddress() {
       county: true,
     }));
     if (!allAddressValid) return;
+
+  
+    dispatch(setReduxPostcode(postcode));
+    dispatch(setReduxAddress1(address1));
+    dispatch(setReduxAddress2(address2));
+    dispatch(setReduxTownCity(townCity));
+    dispatch(setReduxCounty(county));
+
     router.push(ROUTES.PERSONAL_DETAILS);
   };
 
