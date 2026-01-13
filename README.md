@@ -11,6 +11,13 @@ npm run dev  # start the development server
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Tech Stack
+
+- **Framework:** Next.js
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **Deployment:** Vercel
+
 ## Assumptions
 
 * This project uses [google-fonts](https://fonts.google.com/specimen/TikTok+Sans) [`public/font/tiktoksans-variable.tff`]
